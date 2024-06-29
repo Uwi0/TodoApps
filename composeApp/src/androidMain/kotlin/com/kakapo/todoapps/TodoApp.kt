@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.kakapo.todoapps.navigation.TodoAppNavHost
 import com.kakapo.todoapps.navigation.TodoAppState
 import com.kakapo.todoapps.navigation.TopLevelDestination
-import common.Fun
+import com.kakapo.todoapps.common.Fun
 import kotlinx.coroutines.launch
 
 @Composable
@@ -23,7 +23,7 @@ fun TodoApp(todoAppState: TodoAppState) {
         drawerState = drawerState,
         drawerContent = { DrawerContent(todoAppState = todoAppState, closeDrawer = closeDrawer) },
         content = {
-            TodoAppNavHost(todoAppState = todoAppState)
+            TodoAppNavHost(todoAppState = todoAppState, openDrawer = openDrawer)
         }
     )
 }
