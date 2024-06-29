@@ -2,6 +2,8 @@ package com.kakapo.todoapps.screen.task
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,8 +33,13 @@ private fun TaskScreen(onEvent: Fun1<TaskEvent>) {
         content = {
             Column(modifier = Modifier.padding(it)) {
                 Text("Task Screen")
-                Button(content = { Text("Navigate to Detail Task")}, onClick = { onEvent.invoke(OnNavigateToTaskDetail(0))})
             }
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                content = { Icon(imageVector = Icons.Default.Add, contentDescription = null)},
+                onClick = { onEvent.invoke(OnNavigateToTaskDetail(0)) }
+            )
         }
     )
 

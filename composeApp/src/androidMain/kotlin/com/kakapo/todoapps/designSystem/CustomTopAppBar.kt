@@ -1,6 +1,8 @@
 package com.kakapo.todoapps.designSystem
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,10 +20,24 @@ fun CustomDrawerTopAppBar(title: String, onOpenDrawer: Fun) {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TopbarButton(icon: ImageVector, onOpenDrawer: Fun) {
+fun CustomNavigationWithActionTopAppBar(title: String, onNavigateUp: Fun, onAction: Fun) {
+    TopAppBar(
+        title = { Text(title) },
+        navigationIcon = {
+            TopbarButton(icon = Icons.AutoMirrored.Default.ArrowBack, onClick = onNavigateUp)
+        },
+        actions = {
+            TopbarButton(icon = Icons.Default.Delete, onClick = onAction)
+        }
+    )
+}
+
+@Composable
+private fun TopbarButton(icon: ImageVector, onClick: Fun) {
     IconButton(
         content = { Icon(imageVector = icon, contentDescription = null) },
-        onClick = { onOpenDrawer.invoke() }
+        onClick = { onClick.invoke() }
     )
 }
