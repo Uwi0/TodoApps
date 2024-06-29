@@ -2,8 +2,6 @@ package com.kakapo.todoapps.screen.task
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,18 +10,18 @@ import com.kakapo.todoapps.common.Fun1
 import com.kakapo.todoapps.designSystem.CustomDrawerTopAppBar
 
 @Composable
-internal fun TaskScreenRoute(openDrawer: Fun) {
+internal fun TaskScreenRoute(openDrawer: Fun, navigateToTaskDetail: Fun1<Int>) {
 
-    val onEvent: Fun1<TaskEvent> = {
-        when (it) {
+    val onEvent: Fun1<TaskEvent> = { event ->
+        when (event) {
             OnOpenDrawer -> openDrawer.invoke()
+            is OnNavigateToTaskDetail -> navigateToTaskDetail.invoke(event.id)
         }
     }
 
     TaskScreen(onEvent = onEvent)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TaskScreen(onEvent: Fun1<TaskEvent>) {
     Scaffold(
@@ -33,29 +31,9 @@ private fun TaskScreen(onEvent: Fun1<TaskEvent>) {
         content = {
             Column(modifier = Modifier.padding(it)) {
                 Text("Task Screen")
+                Button(content = { Text("Navigate to Detail Task")}, onClick = { onEvent.invoke(OnNavigateToTaskDetail(0))})
             }
         }
     )
 
-}
-
-@Composable
-@OptIn(ExperimentalMaterial3Api::class)
-private fun TaskTopAppBar(onEvent: Fun1<TaskEvent>) {
-    TopAppBar(
-        title = { Text("Todo") },
-        navigationIcon = {
-            IconButton(
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.Menu,
-                        contentDescription = null
-                    )
-                },
-                onClick = {
-                    onEvent.invoke(OnOpenDrawer)
-                }
-            )
-        }
-    )
 }

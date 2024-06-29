@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import com.kakapo.todoapps.common.Fun
 import com.kakapo.todoapps.screen.statistics.navigation.statisticScreen
 import com.kakapo.todoapps.screen.task.navigation.taskScreen
+import com.kakapo.todoapps.screen.taskDetail.navigation.navigateToTaskDetailScreen
 import com.kakapo.todoapps.screen.taskDetail.navigation.taskDetailScreen
 
 @Composable
@@ -12,10 +13,12 @@ internal fun TodoAppNavHost(
     todoAppState: TodoAppState,
     openDrawer: Fun,
 ){
+
     val navController = todoAppState.navController
+
     NavHost(navController = navController, startDestination = todoAppState.startDestination){
-        taskScreen(openDrawer = openDrawer)
+        taskScreen(openDrawer = openDrawer, navigateToTaskDetail = navController::navigateToTaskDetailScreen)
         taskDetailScreen()
-        statisticScreen()
+        statisticScreen(openDrawer = openDrawer)
     }
 }
