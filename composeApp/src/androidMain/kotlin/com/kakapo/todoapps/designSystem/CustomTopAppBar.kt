@@ -1,5 +1,7 @@
 package com.kakapo.todoapps.designSystem
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -8,23 +10,22 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.kakapo.todoapps.common.Fun
+import com.kakapo.todoapps.common.FunEx
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun CustomDrawerTopAppBar(title: String, onOpenDrawer: Fun) {
-    TopAppBar(
-        title = { Text(title) },
+    DividerTopAppBar(
+        title = title,
         navigationIcon = {
             TopbarButton(Icons.Default.Menu, onOpenDrawer)
         }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomNavigationWithActionTopAppBar(title: String, onNavigateUp: Fun, onAction: Fun) {
-    TopAppBar(
-        title = { Text(title) },
+    DividerTopAppBar(
+        title = title,
         navigationIcon = {
             TopbarButton(icon = Icons.AutoMirrored.Default.ArrowBack, onClick = onNavigateUp)
         },
@@ -32,6 +33,19 @@ fun CustomNavigationWithActionTopAppBar(title: String, onNavigateUp: Fun, onActi
             TopbarButton(icon = Icons.Default.Delete, onClick = onAction)
         }
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DividerTopAppBar(
+    title: String,
+    navigationIcon: @Composable () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {}
+) {
+    Column {
+        TopAppBar(title = { Text(title) }, navigationIcon = navigationIcon, actions = actions)
+        HorizontalDivider()
+    }
 }
 
 @Composable
