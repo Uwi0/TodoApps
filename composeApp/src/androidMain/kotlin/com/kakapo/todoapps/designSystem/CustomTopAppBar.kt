@@ -35,6 +35,16 @@ fun CustomNavigationWithActionTopAppBar(title: String, onNavigateUp: Fun, onActi
     )
 }
 
+@Composable
+fun CustomNavigationTopAppBar(title: String, onNavigateUp: Fun) {
+    DividerTopAppBar(
+        title = title,
+        navigationIcon = {
+            TopbarButton(icon = Icons.AutoMirrored.Default.ArrowBack, onClick = onNavigateUp)
+        }
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DividerTopAppBar(

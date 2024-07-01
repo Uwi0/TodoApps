@@ -28,7 +28,7 @@ internal fun TodoAppNavHost(
             navigateUp = navController::popBackStack,
             navigateToEditTask = navController::navigateToAddEditTask
         )
-        addEditTaskScreen()
+        addEditTaskScreen(navigateUp = navController::popBackStack)
         statisticScreen(openDrawer = openDrawer)
     }
 }

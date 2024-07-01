@@ -1,4 +1,4 @@
-package presentation.viewmodel.taskViewModel
+package presentation.viewmodel.task
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import model.Task
 import org.koin.core.component.KoinComponent
 
 class TaskViewModel: ViewModel(), KoinComponent {

@@ -1,4 +1,4 @@
-package presentation.viewmodel.taskViewModel
+package presentation.viewmodel.task
 
 import model.Task
 import model.fakeTasks

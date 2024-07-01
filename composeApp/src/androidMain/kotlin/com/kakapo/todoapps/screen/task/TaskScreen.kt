@@ -17,9 +17,9 @@ import com.kakapo.todoapps.common.Fun1
 import com.kakapo.todoapps.designSystem.CustomDrawerTopAppBar
 import com.kakapo.todoapps.screen.task.component.TaskItem
 import org.koin.androidx.compose.koinViewModel
-import presentation.viewmodel.taskViewModel.NavigateToTaskDetail
-import presentation.viewmodel.taskViewModel.TaskUiState
-import presentation.viewmodel.taskViewModel.TaskViewModel
+import presentation.viewmodel.task.NavigateToTaskDetail
+import presentation.viewmodel.task.TaskUiState
+import presentation.viewmodel.task.TaskViewModel
 
 @Composable
 internal fun TaskScreenRoute(
