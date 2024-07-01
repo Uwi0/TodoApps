@@ -14,13 +14,20 @@ import com.kakapo.todoapps.screen.taskDetail.navigation.taskDetailScreen
 internal fun TodoAppNavHost(
     todoAppState: TodoAppState,
     openDrawer: Fun,
-){
+) {
 
     val navController = todoAppState.navController
 
-    NavHost(navController = navController, startDestination = todoAppState.startDestination){
-        taskScreen(openDrawer = openDrawer, navigateToTaskDetail = navController::navigateToTaskDetailScreen)
-        taskDetailScreen(navigateUp = navController::popBackStack, navigateToEditTask = navController::navigateToAddEditTask)
+    NavHost(navController = navController, startDestination = todoAppState.startDestination) {
+        taskScreen(
+            openDrawer = openDrawer,
+            navigateToTaskDetail = navController::navigateToTaskDetailScreen,
+            navigateToCreateTask = navController::navigateToAddEditTask
+        )
+        taskDetailScreen(
+            navigateUp = navController::popBackStack,
+            navigateToEditTask = navController::navigateToAddEditTask
+        )
         addEditTaskScreen()
         statisticScreen(openDrawer = openDrawer)
     }

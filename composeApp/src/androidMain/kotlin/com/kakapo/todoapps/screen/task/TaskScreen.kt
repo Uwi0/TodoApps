@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,19 +17,34 @@ import com.kakapo.todoapps.common.Fun1
 import com.kakapo.todoapps.designSystem.CustomDrawerTopAppBar
 import com.kakapo.todoapps.screen.task.component.TaskItem
 import org.koin.androidx.compose.koinViewModel
+import presentation.viewmodel.taskViewModel.NavigateToTaskDetail
 import presentation.viewmodel.taskViewModel.TaskUiState
 import presentation.viewmodel.taskViewModel.TaskViewModel
 
 @Composable
-internal fun TaskScreenRoute(openDrawer: Fun, navigateToTaskDetail: Fun1<Int>) {
+internal fun TaskScreenRoute(
+    openDrawer: Fun,
+    navigateToTaskDetail: Fun1<Int>,
+    navigateToCreateTask: Fun
+) {
 
     val viewModel = koinViewModel<TaskViewModel>()
     val uiSTate by viewModel.uiState.collectAsStateWithLifecycle()
 
     val onEvent: Fun1<TaskEvent> = { event ->
         when (event) {
+            is OnNavigateToTaskDetail -> navigateToTaskDetail.invoke(event.task.id)
+            is OnFinishTask -> viewModel.onFinishTask(event.id)
             OnOpenDrawer -> openDrawer.invoke()
-            is OnNavigateToTaskDetail -> navigateToTaskDetail.invoke(event.id)
+            OnNavigateToCreateTask -> navigateToCreateTask.invoke()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                is NavigateToTaskDetail -> navigateToTaskDetail.invoke(effect.id)
+            }
         }
     }
 
@@ -41,11 +57,15 @@ private fun TaskScreen(uiState: TaskUiState, onEvent: Fun1<TaskEvent>) {
         topBar = {
             CustomDrawerTopAppBar(title = "Todo", onOpenDrawer = { onEvent.invoke(OnOpenDrawer) })
         },
-        content = {
-            Column(modifier = Modifier.padding(it)) {
+        content = { paddingValues ->
+            Column(modifier = Modifier.padding(paddingValues)) {
                 LazyColumn {
                     items(uiState.tasks) { task ->
-                        TaskItem(task = task, onChecked = {})
+                        TaskItem(
+                            task = task,
+                            onChecked = { onEvent.invoke(OnFinishTask(it)) },
+                            onClick = { onEvent.invoke(OnNavigateToTaskDetail(task)) }
+                        )
                     }
                 }
             }
@@ -53,7 +73,7 @@ private fun TaskScreen(uiState: TaskUiState, onEvent: Fun1<TaskEvent>) {
         floatingActionButton = {
             FloatingActionButton(
                 content = { Icon(imageVector = Icons.Default.Add, contentDescription = null) },
-                onClick = { onEvent.invoke(OnNavigateToTaskDetail(0)) }
+                onClick = { onEvent.invoke(OnNavigateToCreateTask) }
             )
         }
     )

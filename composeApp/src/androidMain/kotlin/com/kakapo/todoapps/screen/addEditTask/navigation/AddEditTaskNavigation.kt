@@ -8,7 +8,7 @@ import com.kakapo.todoapps.screen.addEditTask.AddEditTaskRoute
 
 const val ADD_EDIT_TASK_ROUTE = "add_edit_task_route"
 
-fun NavController.navigateToAddEditTask(id: Int, navOptions: NavOptions? = null) {
+fun NavController.navigateToAddEditTask(id: Int = 0, navOptions: NavOptions? = null) {
     navigate(ADD_EDIT_TASK_ROUTE)
 }
 

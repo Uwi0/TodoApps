@@ -14,8 +14,16 @@ fun NavController.navigateToTaskScreen(navOptions: NavOptions? = null) {
     navigate(TASK_ROUTE, navOptions)
 }
 
-fun NavGraphBuilder.taskScreen(openDrawer: Fun, navigateToTaskDetail: Fun1<Int>) {
+fun NavGraphBuilder.taskScreen(
+    openDrawer: Fun,
+    navigateToTaskDetail: Fun1<Int>,
+    navigateToCreateTask: Fun
+) {
     composable(TASK_ROUTE) {
-        TaskScreenRoute(openDrawer = openDrawer, navigateToTaskDetail = navigateToTaskDetail)
+        TaskScreenRoute(
+            openDrawer = openDrawer,
+            navigateToTaskDetail = navigateToTaskDetail,
+            navigateToCreateTask = navigateToCreateTask
+        )
     }
 }
